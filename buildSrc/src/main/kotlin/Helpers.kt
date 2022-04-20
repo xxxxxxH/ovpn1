@@ -122,6 +122,7 @@ fun Project.setupApp() {
     }
 
     dependencies.add("implementation", project(":core"))
+    dependencies.add("implementation", project(":nativetemplates"))
 
     if (currentFlavor == "release") (android as AbstractAppExtension).applicationVariants.all {
         for (output in outputs) {

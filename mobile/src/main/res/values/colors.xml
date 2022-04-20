@@ -4,5 +4,5 @@
     <color name="background_stat">@color/material_primary_300</color>
     <color name="material_amber_a700">#ffab00</color>
 
-
+    <color name="gnt_ad_green">#3A6728</color>
 </resources>
