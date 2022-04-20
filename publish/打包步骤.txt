@@ -1,0 +1,12 @@
+1.修改admob应用id
+2.把Constants IS_PRODUCTION改为true
+3.替换google-service.json为正式版
+4.替换AES_KEY
+5.修改包名为正式包名
+
+
+
+打包命令：gradlew.bat bundleRelease  （aab）
+打包命令：gradlew.bat assembleRelease   （apk）
+
+测试包名：com.sharp.fast.vpn  （原903包名）

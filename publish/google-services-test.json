@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "168421379147",
+    "project_id": "sharp-vpn",
+    "storage_bucket": "sharp-vpn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168421379147:android:e0d3e7aad19f4c24aa51ce",
+        "android_client_info": {
+          "package_name": "com.sharp.fast.vpn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "168421379147-dtg3rpaojnsv8ra0eqr8p6d25bi78oba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACP0RiKfwpbNIdiADsOGhiiMRtZJ9Rcf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "168421379147-dtg3rpaojnsv8ra0eqr8p6d25bi78oba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
