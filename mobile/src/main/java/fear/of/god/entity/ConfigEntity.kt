@@ -12,5 +12,6 @@ data class ConfigEntity(
     var interAds: List<String>? = null,
     var interval: Int = 0,
     var nativeAds: List<String>? = null,
-    var showLimit: Int = 0
-):Parcelable
+    var showLimit: Int = 0,
+    var refreshTime: Int = 0
+) : Parcelable

@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fear.of.god.ui.HomeActivity">
 
-    <fear.of.god.view.AdView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:native_size="mini"/>
-</RelativeLayout>
+        android:layout_height="match_parent">
+        <fear.of.god.view.AdViewNative
+            android:id="@+id/ad1"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            app:native_size="mini"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/ad1"
+            android:layout_height="400dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"/>
+        </RelativeLayout>
+
+        <fear.of.god.view.AdViewNative
+            android:id="@+id/ad2"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentBottom="true"
+            app:native_size="small"/>
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
