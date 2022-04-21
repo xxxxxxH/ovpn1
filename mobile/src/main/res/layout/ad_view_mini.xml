@@ -1,100 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
-    <com.google.android.gms.ads.nativead.NativeAdView
-        android:id="@+id/native_ad_view"
+    <fear.of.god.view.TemplateView
+        android:id="@+id/ad"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_centerInParent="true">
+        android:layout_height="match_parent"
+        app:gnt_template_type="@layout/gnt_mini_template_view" />
 
-        <RelativeLayout
-            android:id="@+id/background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:padding="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/icon"
-                android:scaleType="fitCenter" />
-
-            <RelativeLayout
-                android:layout_toEndOf="@+id/icon"
-                android:layout_toStartOf="@+id/cta"
-                android:layout_width="match_parent"
-                android:layout_marginEnd="2dp"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/primary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:textColor="#333333"
-                    android:textSize="14sp"
-                    tools:text="Fast vpn" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/primary"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/ad_notification_view"
-                        android:layout_width="25dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="top"
-                        android:background="@drawable/native_ad_view_label"
-                        android:gravity="center"
-                        android:textColor="#333333"
-                        android:textSize="10sp"
-                        tools:text="Ad" />
-
-                    <TextView
-                        android:id="@+id/body"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="2dp"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:textColor="#333333"
-                        android:textSize="12sp"
-                        tools:text="Adaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
-                </LinearLayout>
-
-            </RelativeLayout>
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/cta"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/native_ad_btn_bg_mini"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:maxWidth="160dp"
-                android:minWidth="60dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="inst"
-                android:textColor="@color/tt_white"
-                android:textSize="13sp" />
-        </RelativeLayout>
-
-    </com.google.android.gms.ads.nativead.NativeAdView>
-
-</merge>
+</LinearLayout>

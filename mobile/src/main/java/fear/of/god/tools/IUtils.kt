@@ -1,6 +1,8 @@
 package fear.of.god.tools
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
@@ -8,6 +10,9 @@ import com.google.gson.reflect.TypeToken
 import com.tencent.mmkv.MMKV
 import fear.of.god.entity.ConfigEntity
 import fear.of.god.entity.ServerEntity
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
 
 val TAG = "xxxxxxH"
 
@@ -52,17 +57,45 @@ fun getServers(result: (ArrayList<ServerEntity>?) -> Unit) {
     }
 }
 
+fun getIdIndex(l: Int): Int {
+    return (0 until l).random()
+}
+
+fun getRandomId(): String {
+    var id = ""
+    val index = getIdIndex(nativeAds.size)
+    id = nativeAds[index]
+    nativeAds.removeAt(index)
+    return id
+}
+
+fun AppCompatActivity.startCountDown(count:Int,block:()->Unit){
+    var job: Job? = null
+    job = lifecycleScope.launch(Dispatchers.IO){
+        (0..count).asFlow().collect {
+            delay(1000)
+            if (it == count-1){
+                withContext(Dispatchers.Main) {
+                    block()
+                }
+                job?.cancel()
+            }
+        }
+    }
+
+}
+
 var configEntity
     get() = MMKV.defaultMMKV().decodeParcelable(Constant.KEY_CONFIG, ConfigEntity::class.java)
     set(value) {
         MMKV.defaultMMKV().encode(Constant.KEY_CONFIG, value)
     }
 
-fun Any.log(explain:String = TAG) {
+fun Any.log(explain: String = TAG) {
     Log.e(TAG, "$explain = ${this}")
 }
 
-lateinit var interAds:ArrayList<String>
+lateinit var interAds: ArrayList<String>
 
-lateinit var nativeAds:ArrayList<String>
+lateinit var nativeAds: ArrayList<String>
 

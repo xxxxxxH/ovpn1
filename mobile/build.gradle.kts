@@ -69,4 +69,6 @@ dependencies {
     implementation("com.pangle.global:ads-sdk:4.1.1.2")
     implementation("com.google.android.gms:play-services-ads-identifier:17.0.0")
     implementation("com.tencent:mmkv:1.2.13")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
 }

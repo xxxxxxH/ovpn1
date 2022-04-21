@@ -35,6 +35,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name="fear.of.god.ui.HomeActivity" />
 
 
         <!--测试ID-->
