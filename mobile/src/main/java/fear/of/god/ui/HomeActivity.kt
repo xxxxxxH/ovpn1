@@ -125,8 +125,9 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 tester?.test(this){
                     ad1.loadAd()
                     ad2.loadAd()
+                    showInter()
                 }
-                showInter()
+                startActivity(Intent(this, ResultActivity::class.java))
             }
             "Stopped" -> {
                 "Stopped".log()
