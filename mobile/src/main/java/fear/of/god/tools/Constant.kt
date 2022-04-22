@@ -12,4 +12,5 @@ object Constant {
 //    const val SEVER_KEY = ""
 
     const val KEY_CONFIG = "c"
+    const val KEY_SERVER = "s"
 }

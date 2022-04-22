@@ -8,12 +8,18 @@ import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.roger.catloadinglibrary.CatLoadingView
+import fear.of.god.event.IEvent
 import fear.of.god.tools.*
+import org.greenrobot.eventbus.EventBus
 
 abstract class BaseActivity(id: Int) : AppCompatActivity(id) {
 
     private val adRequest: AdRequest = AdRequest.Builder().build()
     private var interstitialAd: InterstitialAd? = null
+    protected val loadingView by lazy {
+        CatLoadingView()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +57,7 @@ abstract class BaseActivity(id: Int) : AppCompatActivity(id) {
                                 object : FullScreenContentCallback() {
                                     override fun onAdDismissedFullScreenContent() {
                                         "".log("onAdDismissedFullScreenContent")
+                                        EventBus.getDefault().post(IEvent("inter dismiss"))
                                     }
 
                                     override fun onAdFailedToShowFullScreenContent(

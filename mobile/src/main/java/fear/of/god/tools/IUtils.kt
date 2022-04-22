@@ -2,7 +2,9 @@ package fear.of.god.tools
 
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.github.shadowsocks.net.HttpsTest
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.google.gson.Gson
@@ -97,7 +99,7 @@ fun isShowNativeAd(view: View): Boolean {
         if (it.closeAd)
             return false
         if (nativeAdClickCount >= it.clickLimit) {
-            view.visibility = View.GONE
+            view.visibility = View.INVISIBLE
             return false
         }
         if (it.closeVersions!!.contains(code)) {
@@ -123,6 +125,25 @@ fun isShowInterAd(): Boolean {
     return true
 }
 
+fun AppCompatActivity.showToast(s:String){
+    Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+}
+
+fun HttpsTest.test(activity: AppCompatActivity, success:()->Unit){
+    status.removeObservers(activity)
+    invalidate()
+    status.observe(
+        activity
+    ) { status ->
+        status.log("status")
+        if (status is HttpsTest.Status.Success) {
+            success()
+        }
+
+    }
+    testConnection()
+}
+
 fun Any.log(explain: String = TAG) {
     Log.e(TAG, "$explain = ${this}")
 }
@@ -131,6 +152,12 @@ var configEntity
     get() = MMKV.defaultMMKV().decodeParcelable(Constant.KEY_CONFIG, ConfigEntity::class.java)
     set(value) {
         MMKV.defaultMMKV().encode(Constant.KEY_CONFIG, value)
+    }
+
+var serverEntity
+    get() = MMKV.defaultMMKV().decodeParcelable(Constant.KEY_SERVER, ServerEntity::class.java)
+    set(value) {
+        MMKV.defaultMMKV().encode(Constant.KEY_SERVER, value)
     }
 
 var code = ""

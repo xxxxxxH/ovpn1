@@ -34,6 +34,8 @@ android.apply {
             signingConfig = signingConfigs.getByName("test")
         }
     }
+
+
 }
 
 
@@ -71,4 +73,7 @@ dependencies {
     implementation("com.tencent:mmkv:1.2.13")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.3")
+    implementation("com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4")
+    implementation("org.greenrobot:eventbus:3.3.1")
+    implementation("com.roger.catloadinglibrary:catloadinglibrary:1.0.9")
 }

@@ -9,8 +9,10 @@ import fear.of.god.tools.getConfig
 class SplashActivity : BaseActivity(R.layout.layout_splash) {
     override fun initView() {
         super.initView()
+        loadingView.show(supportFragmentManager,"")
         getConfig {
             startActivity(Intent(this, HomeActivity::class.java))
+            loadingView.dismiss()
             finish()
         }
     }

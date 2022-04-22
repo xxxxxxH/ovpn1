@@ -36,6 +36,8 @@
 
         </activity>
         <activity android:name="fear.of.god.ui.HomeActivity" />
+        <activity android:name="fear.of.god.ui.NodeActivity" />
+        <activity android:name="fear.of.god.ui.ResultActivity" />
 
 
         <!--测试ID-->

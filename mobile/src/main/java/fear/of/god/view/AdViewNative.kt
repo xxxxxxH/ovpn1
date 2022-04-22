@@ -53,7 +53,7 @@ class AdViewNative @JvmOverloads constructor(
         }
     }
 
-    private fun loadAd() {
+    fun loadAd() {
         adId = getNativeRandomId()
         if (adId != "") {
             val loader = AdLoader.Builder(context, adId).forNativeAd {
@@ -109,7 +109,7 @@ class AdViewNative @JvmOverloads constructor(
             loader.loadAd(AdRequest.Builder().build())
         } else {
             countDownJob?.cancel()
-            visibility = View.GONE
+            visibility = View.INVISIBLE
         }
 
     }
