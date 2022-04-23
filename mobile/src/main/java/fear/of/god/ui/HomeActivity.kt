@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.github.shadowsocks.R
 import com.github.shadowsocks.aidl.ShadowsocksConnection
+import com.github.shadowsocks.bg.BaseService
 import com.github.shadowsocks.net.HttpsTest
 import com.github.shadowsocks.utils.StartService
 import fear.of.god.base.BaseActivity
@@ -33,6 +34,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
     private var connect: ActivityResultLauncher<*>? = null
     private val connection = ShadowsocksConnection(true)
     var tester: HttpsTest? = null
+    var statusExtra = ""
 
     override fun initView() {
         super.initView()
@@ -58,7 +60,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(1000)
                         withContext(Dispatchers.Main){
-                            SSManager.get().stopConnect(connect!!)
+                            SSManager.get().stopConnect()
                         }
                     }
                 }else if ((it as Button).text == "Connect"){
@@ -107,7 +109,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         val msg = e.getMessage()
         when(msg[0]){
             "switchServer" -> {
-                SSManager.get().switchServer(this)
+//                SSManager.get().switchServer(this)
                 serverEntity?.let {
                     homeStatus.text = it.name
                 }?: kotlin.run {
@@ -125,16 +127,33 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 tester?.test(this){
                     ad1.loadAd()
                     ad2.loadAd()
-                    showInter()
                 }
-                startActivity(Intent(this, ResultActivity::class.java))
+                interstitialAd?.let {
+                    showInter()
+                    statusExtra = "Connected"
+                }?: kotlin.run {
+                    startActivity(Intent(this, ResultActivity::class.java).apply {
+                        putExtra("status", "Connected")
+                    })
+                }
             }
             "Stopped" -> {
                 "Stopped".log()
                 setStatus(Status.UNCONNECT)
+                loadingView.dismiss()
+                interstitialAd?.let {
+                    showInter()
+                    statusExtra = "Stopped"
+                }?: kotlin.run {
+                    startActivity(Intent(this, ResultActivity::class.java).apply {
+                        putExtra("status", "Stopped")
+                    })
+                }
             }
             "inter dismiss" -> {
-                startActivity(Intent(this, ResultActivity::class.java))
+                startActivity(Intent(this, ResultActivity::class.java).apply {
+                    putExtra("status", statusExtra)
+                })
             }
             "start connect failed"->{
                 loadingView.dismiss()

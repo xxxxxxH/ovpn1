@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.facebook.FacebookSdk
+import com.facebook.appevents.internal.ActivityLifecycleTracker
 import com.github.shadowsocks.net.HttpsTest
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
@@ -55,6 +57,19 @@ fun getServers(result: (ArrayList<ServerEntity>?) -> Unit) {
             Gson().fromJson(it, object : TypeToken<List<ServerEntity>>() {}.type)
         servers?.log("servers")
         result(servers)
+    }
+}
+
+fun AppCompatActivity.initFaceBook() {
+    FacebookSdk.apply {
+        configEntity?.let {
+            setApplicationId(it.fbId)
+            sdkInitialize(this@initFaceBook)
+            ActivityLifecycleTracker.apply {
+                onActivityCreated(this@initFaceBook)
+                onActivityResumed(this@initFaceBook)
+            }
+        }
     }
 }
 

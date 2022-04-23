@@ -16,7 +16,7 @@ import org.greenrobot.eventbus.EventBus
 abstract class BaseActivity(id: Int) : AppCompatActivity(id) {
 
     private val adRequest: AdRequest = AdRequest.Builder().build()
-    private var interstitialAd: InterstitialAd? = null
+    protected var interstitialAd: InterstitialAd? = null
     protected val loadingView by lazy {
         CatLoadingView()
     }

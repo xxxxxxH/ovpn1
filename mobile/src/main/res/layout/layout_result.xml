@@ -36,14 +36,14 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                tools:text="Connect Success"/>
+                android:text="Connect Result"/>
         </LinearLayout>
 
         <fear.of.god.view.AdViewNative
             android:id="@+id/ad2"
-            android:layout_below="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:native_size="small"/>
+            android:layout_below="@+id/content"
+            app:native_size="small" />
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

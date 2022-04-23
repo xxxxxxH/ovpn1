@@ -35,7 +35,7 @@ class SSManager : ShadowsocksConnection.Callback {
         serverEntity?.let {
             try {
                 connect.launch(null)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 EventBus.getDefault().post("start connect failed")
             }
 
@@ -44,10 +44,10 @@ class SSManager : ShadowsocksConnection.Callback {
         }
     }
 
-    fun stopConnect(connect: ActivityResultLauncher<*>) {
+    fun stopConnect() {
         try {
             Core.stopService()
-        }catch (e:Exception){
+        } catch (e: Exception) {
             EventBus.getDefault().post("stop connected failed")
         }
 
@@ -80,6 +80,7 @@ class SSManager : ShadowsocksConnection.Callback {
     }
 
     override fun stateChanged(state: BaseService.State, profileName: String?, msg: String?) {
+        "current state $state".log("state")
         when (state) {
             BaseService.State.Connecting -> {
                 EventBus.getDefault().post(IEvent("connecting"))

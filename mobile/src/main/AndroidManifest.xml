@@ -35,7 +35,10 @@
             </intent-filter>
 
         </activity>
-        <activity android:name="fear.of.god.ui.HomeActivity" />
+        <activity android:name="fear.of.god.ui.HomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity android:name="fear.of.god.ui.NodeActivity" />
         <activity android:name="fear.of.god.ui.ResultActivity" />
 
