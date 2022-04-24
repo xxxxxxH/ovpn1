@@ -109,7 +109,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         val msg = e.getMessage()
         when(msg[0]){
             "switchServer" -> {
-//                SSManager.get().switchServer(this)
+                SSManager.get().switchServer(this)
                 serverEntity?.let {
                     homeStatus.text = it.name
                 }?: kotlin.run {
