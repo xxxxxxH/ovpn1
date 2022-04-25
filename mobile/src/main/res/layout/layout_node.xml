@@ -5,11 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eef0f2">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/node_bg">
 
-    <fear.of.god.view.AdViewNative
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        app:native_size="mini"/>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_tool_bar"/>
+
+        <fear.of.god.view.AdViewNative
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/toolbar"
+            app:native_size="mini"/>
+    </RelativeLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
