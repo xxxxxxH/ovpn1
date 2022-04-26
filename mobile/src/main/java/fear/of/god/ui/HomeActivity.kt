@@ -2,7 +2,9 @@ package fear.of.god.ui
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModelProvider
@@ -31,6 +33,9 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
     private lateinit var btn:Button
     private lateinit var ad1:AdViewNative
     private lateinit var ad2:AdViewNative
+    private lateinit var image:ImageView
+    private lateinit var back:ImageView
+    private lateinit var title:TextView
     private var connect: ActivityResultLauncher<*>? = null
     private val connection = ShadowsocksConnection(true)
     var tester: HttpsTest? = null
@@ -48,6 +53,12 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         homeStatus = findViewById(R.id.homeStatus)
         ad1 = findViewById(R.id.ad1)
         ad2 = findViewById(R.id.ad2)
+        image = findViewById(R.id.image)
+        back = findViewById(R.id.back)
+        back.visibility = View.GONE
+        findViewById<TextView>(R.id.title).apply {
+            text = "VPN"
+        }
         homeStatus.setOnClickListener {
             startActivity(Intent(this, NodeActivity::class.java))
         }
@@ -56,7 +67,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             if (serverEntity == null){
                 showToast("please select node")
             }else{
-                if ((it as Button).text == "Disconnect"){
+                if ((it as Button).contentDescription == "Disconnect"){
                     loadingView.show(supportFragmentManager, "")
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(1000)
@@ -64,7 +75,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                             SSManager.get().stopConnect()
                         }
                     }
-                }else if ((it as Button).text == "Connect"){
+                }else if ((it as Button).contentDescription == "Connect"){
                     loadingView.show(supportFragmentManager, "")
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(2000)
@@ -95,13 +106,17 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 homeStatus.text = "please select node"
             }
             Status.UNCONNECT->{
-                btn.text = "Connect"
+                btn.contentDescription = "Connect"
+                btn.setBackgroundResource(R.drawable.button_connect)
+                image.visibility = View.GONE
             }
             Status.CONNECTING -> {
-                btn.text = "Connecting"
+                btn.contentDescription = "Connecting"
             }
             Status.CONNECTED->{
-                btn.text = "Disconnect"
+                btn.contentDescription = "Disconnect"
+                btn.setBackgroundResource(R.drawable.button_disconnect)
+                image.visibility = View.VISIBLE
             }
         }
     }

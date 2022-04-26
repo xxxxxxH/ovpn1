@@ -4,24 +4,31 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fear.of.god.ui.HomeActivity">
+    tools:context="fear.of.god.ui.HomeActivity"
+    android:background="@drawable/home_bg">
 
     <RelativeLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_tool_bar"/>
+
         <fear.of.god.view.AdViewNative
             android:id="@+id/ad1"
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/toolbar"
             app:native_size="mini" />
 
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ad1"
             android:orientation="vertical"
             android:gravity="center"
@@ -30,9 +37,9 @@
             <TextView
                 android:id="@+id/homeStatus"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@drawable/home_status"
-                android:textColor="#fff"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_status_bg"
+                android:textColor="#000"
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -40,12 +47,19 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/tt_white"
+                android:background="@drawable/button_connect"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:text="Connect"/>
+                android:contentDescription="Connect"
+                android:layout_marginTop="20dp"/>
+
+            <ImageView
+                android:id="@+id/image"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/disconnect"/>
         </LinearLayout>
 
         <fear.of.god.view.AdViewNative

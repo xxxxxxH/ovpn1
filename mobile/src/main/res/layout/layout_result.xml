@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@drawable/result_bg"
     android:layout_height="match_parent">
 
     <RelativeLayout
@@ -11,27 +12,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/layout_tool_bar"/>
+
         <fear.of.god.view.AdViewNative
             android:id="@+id/ad1"
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_alignParentTop="true"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
             app:native_size="mini" />
 
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/ad1"
             android:orientation="vertical"
             android:gravity="center"
             android:padding="10dp">
 
+            <ImageView
+                android:id="@+id/imageResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sucess"/>
+
             <TextView
                 android:id="@+id/homeStatus"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@drawable/home_status"
+                android:layout_height="50dp"
                 android:textColor="#fff"
                 android:gravity="center"
                 android:textStyle="bold"

@@ -1,7 +1,10 @@
 package fear.of.god.ui
 
 import android.annotation.SuppressLint
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.shadowsocks.R
 import fear.of.god.adapter.NodeAdapter
@@ -21,6 +24,12 @@ class NodeActivity : BaseActivity(R.layout.layout_node) {
         super.initView()
         loadingView.show(supportFragmentManager,"")
         recycler = findViewById(R.id.recycler)
+        findViewById<ImageView>(R.id.back).apply {
+            setOnClickListener { finish() }
+        }
+        findViewById<TextView>(R.id.title).apply {
+            text = "Fast Smart"
+        }
         getServers {
             it?.let {d->
 
@@ -34,7 +43,7 @@ class NodeActivity : BaseActivity(R.layout.layout_node) {
                 }
 
                 val a = NodeAdapter(d)
-                recycler.layoutManager = GridLayoutManager(this, 2)
+                recycler.layoutManager = LinearLayoutManager(this)
                 recycler.adapter = a
                 loadingView.dismiss()
                 a.setOnItemClickListener { adapter, _, position ->
