@@ -59,6 +59,8 @@ fun getServers(result: (ArrayList<ServerEntity>?) -> Unit) {
         val servers: ArrayList<ServerEntity>? =
             Gson().fromJson(it, object : TypeToken<List<ServerEntity>>() {}.type)
         servers?.log("servers")
+        servers?.shuffle()
+        servers?.log("servers")
         result(servers)
     }
 }
@@ -83,8 +85,8 @@ fun getIdIndex(l: Int): Int {
 fun getNativeRandomId(): String {
     var id = ""
     if (nativeAds.size > 0) {
-        lastNativeAdIdIndex ++
-        if (lastNativeAdIdIndex >= (nativeAds.size)){
+        lastNativeAdIdIndex++
+        if (lastNativeAdIdIndex >= (nativeAds.size)) {
             lastNativeAdIdIndex = 0
         }
         id = nativeAds[lastNativeAdIdIndex]
@@ -97,8 +99,8 @@ fun getNativeRandomId(): String {
 fun getInterRandomId(): String {
     var id = ""
     if (interAds.size > 0) {
-        lastInterAdIdIndex ++
-        if (lastInterAdIdIndex >= (interAds.size - 1)){
+        lastInterAdIdIndex++
+        if (lastInterAdIdIndex >= (interAds.size - 1)) {
             lastInterAdIdIndex = 0
         }
         id = interAds[lastInterAdIdIndex]
@@ -149,11 +151,11 @@ fun isShowInterAd(): Boolean {
     return true
 }
 
-fun AppCompatActivity.showToast(s:String){
+fun AppCompatActivity.showToast(s: String) {
     Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
 }
 
-fun HttpsTest.test(activity: AppCompatActivity, success:()->Unit){
+fun HttpsTest.test(activity: AppCompatActivity, success: () -> Unit) {
     status.removeObservers(activity)
     invalidate()
     status.observe(
@@ -167,7 +169,8 @@ fun HttpsTest.test(activity: AppCompatActivity, success:()->Unit){
     }
     testConnection()
 }
-fun Application.name():String{
+
+fun Application.name(): String {
     var name = ""
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         name = getProcessName()
