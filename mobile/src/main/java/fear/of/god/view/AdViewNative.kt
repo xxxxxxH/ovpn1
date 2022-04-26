@@ -13,6 +13,7 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
 import fear.of.god.tools.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.asFlow
@@ -32,6 +33,8 @@ class AdViewNative @JvmOverloads constructor(
     var countDownJob: Job? = null
 
     var delayTime = 1000L
+
+    var nativeAd:NativeAd? = null
 
     init {
         size = context.obtainStyledAttributes(attrs, R.styleable.NativeAdView)
@@ -57,6 +60,7 @@ class AdViewNative @JvmOverloads constructor(
         adId = getNativeRandomId()
         if (adId != "") {
             val loader = AdLoader.Builder(context, adId).forNativeAd {
+                nativeAd = it
                 removeAllViews()
                 var v: View? = null
                 when (size) {
@@ -114,12 +118,16 @@ class AdViewNative @JvmOverloads constructor(
 
     }
 
+    fun destory(){
+        countDownJob?.cancel()
+        nativeAd?.destroy()
+    }
+
 
     private fun startCountDown(start: Int, refresh: () -> Unit) {
         countDownJob = (context as AppCompatActivity).lifecycleScope.launch(Dispatchers.IO) {
             (start..Int.MAX_VALUE).asFlow().collect {
                 delay(delayTime)
-                "${it % (configEntity!!.refreshTime)}".log()
                 if ((it % (configEntity!!.refreshTime)) == 0) {
                     withContext(Dispatchers.Main) {
                         refresh()

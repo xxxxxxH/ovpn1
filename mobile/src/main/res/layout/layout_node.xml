@@ -15,6 +15,7 @@
             layout="@layout/layout_tool_bar"/>
 
         <fear.of.god.view.AdViewNative
+            android:id="@+id/ad1"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
             android:layout_marginTop="10dp"

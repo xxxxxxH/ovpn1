@@ -14,15 +14,18 @@ import fear.of.god.event.IEvent
 import fear.of.god.tools.SSManager
 import fear.of.god.tools.getServers
 import fear.of.god.tools.serverEntity
+import fear.of.god.view.AdViewNative
 import org.greenrobot.eventbus.EventBus
 
 @SuppressLint("NotifyDataSetChanged")
 class NodeActivity : BaseActivity(R.layout.layout_node) {
     lateinit var recycler: RecyclerView
+    lateinit var ad:AdViewNative
 
     override fun initView() {
         super.initView()
         loadingView.show(supportFragmentManager,"")
+        ad = findViewById(R.id.ad1)
         recycler = findViewById(R.id.recycler)
         findViewById<ImageView>(R.id.back).apply {
             setOnClickListener { finish() }
@@ -61,5 +64,10 @@ class NodeActivity : BaseActivity(R.layout.layout_node) {
             }
 
         }
+    }
+
+    override fun onDestroy() {
+        ad.destory()
+        super.onDestroy()
     }
 }

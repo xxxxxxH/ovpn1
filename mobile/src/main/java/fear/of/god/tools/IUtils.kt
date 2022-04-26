@@ -1,5 +1,8 @@
 package fear.of.god.tools
 
+import android.app.Application
+import android.app.Application.getProcessName
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -80,10 +83,13 @@ fun getIdIndex(l: Int): Int {
 fun getNativeRandomId(): String {
     var id = ""
     if (nativeAds.size > 0) {
-        val index = getIdIndex(nativeAds.size)
-        id = nativeAds[index]
-        nativeAds.removeAt(index)
+        lastNativeAdIdIndex ++
+        if (lastNativeAdIdIndex >= (nativeAds.size)){
+            lastNativeAdIdIndex = 0
+        }
+        id = nativeAds[lastNativeAdIdIndex]
     }
+    lastNativeAdIdIndex.log("native index")
     id.log("Native id")
     return id
 }
@@ -91,10 +97,13 @@ fun getNativeRandomId(): String {
 fun getInterRandomId(): String {
     var id = ""
     if (interAds.size > 0) {
-        val index = getIdIndex(interAds.size)
-        id = interAds[index]
-        interAds.removeAt(index)
+        lastInterAdIdIndex ++
+        if (lastInterAdIdIndex >= (interAds.size - 1)){
+            lastInterAdIdIndex = 0
+        }
+        id = interAds[lastInterAdIdIndex]
     }
+    lastInterAdIdIndex.log("inter index")
     id.log("Inter id")
     return id
 }
@@ -158,6 +167,13 @@ fun HttpsTest.test(activity: AppCompatActivity, success:()->Unit){
     }
     testConnection()
 }
+fun Application.name():String{
+    var name = ""
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        name = getProcessName()
+    }
+    return name
+}
 
 fun Any.log(explain: String = TAG) {
     Log.e(TAG, "$explain = ${this}")
@@ -186,4 +202,9 @@ var nativeAdClickCount = 0
 var interAdShowCount = 0
 
 var current = 0
+
+var lastNativeAdIdIndex = -1
+
+var lastInterAdIdIndex = -1
+
 

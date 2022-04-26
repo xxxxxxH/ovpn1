@@ -176,7 +176,7 @@ class TemplateView : FrameLayout {
         //  Set the secondary view to be the star rating if available.
         if (starRating != null && starRating > 0) {
             secondaryView!!.visibility = GONE
-            ratingBar!!.visibility = VISIBLE
+//            ratingBar!!.visibility = VISIBLE
             ratingBar!!.rating = starRating.toFloat()
             nativeAdView!!.starRatingView = ratingBar
         } else {
