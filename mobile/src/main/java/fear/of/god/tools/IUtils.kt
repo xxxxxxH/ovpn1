@@ -207,4 +207,6 @@ var lastNativeAdIdIndex = -1
 
 var lastInterAdIdIndex = -1
 
+var lastInterShowTime = 0L
+
 

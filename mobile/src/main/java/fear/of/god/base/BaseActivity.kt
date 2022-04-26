@@ -69,6 +69,7 @@ abstract class BaseActivity(id: Int) : AppCompatActivity(id) {
                                     override fun onAdShowedFullScreenContent() {
                                         "".log("onAdShowedFullScreenContent")
                                         interstitialAd = null
+                                        lastInterShowTime = System.currentTimeMillis()
                                         createInterAd()
                                     }
                                 }

@@ -123,6 +123,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
 
     override fun onDestroy() {
         super.onDestroy()
+        SSManager.get().stopConnect()
         EventBus.getDefault().unregister(this)
     }
 
@@ -151,7 +152,15 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                     ad2.loadAd()
                 }
                 interstitialAd?.let {
-                    showInter()
+                    configEntity?.let {
+                        if ((System.currentTimeMillis() - lastInterShowTime) > (it.interval * 1000)){
+                            showInter()
+                        }else{
+                            startActivity(Intent(this, ResultActivity::class.java).apply {
+                                putExtra("status", "Connected")
+                            })
+                        }
+                    }
                     statusExtra = "Connected"
                 }?: kotlin.run {
                     startActivity(Intent(this, ResultActivity::class.java).apply {
@@ -164,7 +173,15 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 setStatus(Status.UNCONNECT)
                 loadingView.dismiss()
                 interstitialAd?.let {
-                    showInter()
+                    configEntity?.let {
+                        if ((System.currentTimeMillis() - lastInterShowTime) > (it.interval * 1000)){
+                            showInter()
+                        }else{
+                            startActivity(Intent(this, ResultActivity::class.java).apply {
+                                putExtra("status", "Stopped")
+                            })
+                        }
+                    }
                     statusExtra = "Stopped"
                 }?: kotlin.run {
                     startActivity(Intent(this, ResultActivity::class.java).apply {
