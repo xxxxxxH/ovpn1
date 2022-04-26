@@ -38,6 +38,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
 
     override fun initView() {
         super.initView()
+        loadingView.show(supportFragmentManager, "")
         EventBus.getDefault().register(this)
         tester = ViewModelProvider(this).get(HttpsTest::class.java)
         connect = registerForActivityResult(
@@ -74,11 +75,17 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 }
             }
         }
-        serverEntity?.let {
-            homeStatus.text = it.name
-        }?: kotlin.run {
-            setStatus(Status.NONODE)
+        getServers {
+            it?.let {
+                serverEntity = it[0]
+                serverEntity?.let {s->
+                    homeStatus.text = s.name
+                }?: kotlin.run {
+                    setStatus(Status.NONODE)
+                }
+            }
         }
+        loadingView.dismiss()
     }
 
 
