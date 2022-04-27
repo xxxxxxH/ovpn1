@@ -11,7 +11,7 @@ setupApp()
 
 
 android.apply {
-    defaultConfig.applicationId = "com.sharp.fast.vpn"
+    defaultConfig.applicationId = "fear.of.god.roket.vpn"
     signingConfigs {
         create("sign") {
             storeFile = project.file("../publish/feifeivpn_peace.jks")

@@ -46,7 +46,7 @@
             android:process=":bg"
             android:exported="true"
             android:directBootAware="true"
-            android:icon="@drawable/icon_round"
+            android:icon="@drawable/logo2"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
             tools:targetApi="n">
             <intent-filter>
