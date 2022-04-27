@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.github.shadowsocks.R
 import com.github.shadowsocks.aidl.ShadowsocksConnection
 import com.github.shadowsocks.bg.BaseService
@@ -36,6 +37,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
     private lateinit var image:ImageView
     private lateinit var back:ImageView
     private lateinit var title:TextView
+    private lateinit var loading:ImageView
     private var connect: ActivityResultLauncher<*>? = null
     private val connection = ShadowsocksConnection(true)
     var tester: HttpsTest? = null
@@ -43,7 +45,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
 
     override fun initView() {
         super.initView()
-        loadingView.show(supportFragmentManager, "")
+//        loadingView.show(supportFragmentManager, "")
         EventBus.getDefault().register(this)
         tester = ViewModelProvider(this).get(HttpsTest::class.java)
         connect = registerForActivityResult(
@@ -51,6 +53,9 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         ) { result: Boolean? -> }
         connection.connect(this, SSManager.get())
         homeStatus = findViewById(R.id.homeStatus)
+        loading = findViewById(R.id.loading)
+        loading.visibility = View.VISIBLE
+        Glide.with(this).asGif().load(R.drawable.loading_rocket).into(loading)
         ad1 = findViewById(R.id.ad1)
         ad2 = findViewById(R.id.ad2)
         image = findViewById(R.id.image)
@@ -68,7 +73,8 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 showToast("please select node")
             }else{
                 if ((it as Button).contentDescription == "Disconnect"){
-                    loadingView.show(supportFragmentManager, "")
+//                    loadingView.show(supportFragmentManager, "")
+                    loading.visibility = View.VISIBLE
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(1000)
                         withContext(Dispatchers.Main){
@@ -76,7 +82,8 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                         }
                     }
                 }else if ((it as Button).contentDescription == "Connect"){
-                    loadingView.show(supportFragmentManager, "")
+//                    loadingView.show(supportFragmentManager, "")
+                    loading.visibility = View.VISIBLE
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(2000)
                         withContext(Dispatchers.Main){
@@ -96,7 +103,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 }
             }
         }
-        loadingView.dismiss()
+        loading.visibility = View.GONE
     }
 
 
@@ -146,7 +153,8 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             "Connected" -> {
                 "Connected".log()
                 setStatus(Status.CONNECTED)
-                loadingView.dismiss()
+//                loadingView.dismiss()
+                loading.visibility = View.GONE
                 tester?.test(this){
                     ad1.loadAd()
                     ad2.loadAd()
@@ -171,7 +179,8 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             "Stopped" -> {
                 "Stopped".log()
                 setStatus(Status.UNCONNECT)
-                loadingView.dismiss()
+//                loadingView.dismiss()
+                loading.visibility = View.GONE
                 interstitialAd?.let {
                     configEntity?.let {
                         if ((System.currentTimeMillis() - lastInterShowTime) > (it.interval * 1000)){
@@ -195,10 +204,12 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 })
             }
             "start connect failed"->{
-                loadingView.dismiss()
+//                loadingView.dismiss()
+                loading.visibility = View.GONE
             }
             "stop connected failed"->{
-                loadingView.dismiss()
+//                loadingView.dismiss()
+                loading.visibility = View.GONE
             }
         }
     }

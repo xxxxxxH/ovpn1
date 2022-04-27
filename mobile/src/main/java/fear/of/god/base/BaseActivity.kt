@@ -17,9 +17,9 @@ abstract class BaseActivity(id: Int) : AppCompatActivity(id) {
 
     private val adRequest: AdRequest = AdRequest.Builder().build()
     protected var interstitialAd: InterstitialAd? = null
-    protected val loadingView by lazy {
-        CatLoadingView()
-    }
+//    protected val loadingView by lazy {
+//        CatLoadingView()
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

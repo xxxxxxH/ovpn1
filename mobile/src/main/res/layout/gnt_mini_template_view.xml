@@ -51,7 +51,7 @@
                         android:layout_marginRight="3dp"
                         android:layout_weight="0"
                         android:scaleType="fitCenter"
-                        tools:src="@drawable/icon" />
+                        tools:src="@drawable/logo" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/cta"

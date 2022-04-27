@@ -24,8 +24,8 @@
     </queries>
 
     <application
-        android:icon="@drawable/icon"
-        android:roundIcon="@drawable/icon_round"
+        android:icon="@drawable/logo"
+        android:roundIcon="@drawable/logo2"
         android:allowBackup="true"
         android:autoRevokePermissions="allowed"
         android:extractNativeLibs="true"
