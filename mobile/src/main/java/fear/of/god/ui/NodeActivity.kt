@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.github.shadowsocks.R
 import fear.of.god.adapter.NodeAdapter
@@ -23,13 +24,12 @@ import org.greenrobot.eventbus.EventBus
 class NodeActivity : BaseActivity(R.layout.layout_node) {
     lateinit var recycler: RecyclerView
     lateinit var ad:AdViewNative
-    private lateinit var loading:ImageView
+    private lateinit var anim: LottieAnimationView
 
     override fun initView() {
         super.initView()
-        loading = findViewById(R.id.loading)
-        loading.visibility = View.VISIBLE
-        Glide.with(this).asGif().load(R.drawable.loading_rocket).into(loading)
+        anim = findViewById(R.id.anim)
+        anim.visibility = View.VISIBLE
         ad = findViewById(R.id.ad1)
         recycler = findViewById(R.id.recycler)
         findViewById<ImageView>(R.id.back).apply {
@@ -53,8 +53,7 @@ class NodeActivity : BaseActivity(R.layout.layout_node) {
                 val a = NodeAdapter(d)
                 recycler.layoutManager = LinearLayoutManager(this)
                 recycler.adapter = a
-//                loadingView.dismiss()
-                loading.visibility = View.GONE
+                anim.visibility = View.GONE
                 a.setOnItemClickListener { adapter, _, position ->
                     val data = adapter.data as ArrayList<ServerEntity>
                     for ((index, item) in data.withIndex()) {
@@ -66,8 +65,7 @@ class NodeActivity : BaseActivity(R.layout.layout_node) {
                     finish()
                 }
             }?: kotlin.run {
-//                loadingView.dismiss()
-                loading.visibility = View.GONE
+                anim.visibility = View.GONE
             }
 
         }

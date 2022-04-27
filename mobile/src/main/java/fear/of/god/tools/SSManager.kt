@@ -15,6 +15,7 @@ import org.greenrobot.eventbus.EventBus
 
 class SSManager : ShadowsocksConnection.Callback {
     var state = BaseService.State.Idle
+    var send = false
 
     companion object {
         private var i: SSManager? = null
@@ -44,8 +45,9 @@ class SSManager : ShadowsocksConnection.Callback {
         }
     }
 
-    fun stopConnect() {
+    fun stopConnect(send:Boolean) {
         try {
+            this.send = send
             Core.stopService()
         } catch (e: Exception) {
             EventBus.getDefault().post("stop connected failed")
@@ -89,7 +91,7 @@ class SSManager : ShadowsocksConnection.Callback {
                 EventBus.getDefault().post(IEvent("Connected"))
             }
             BaseService.State.Stopped -> {
-                EventBus.getDefault().post(IEvent("Stopped"))
+                EventBus.getDefault().post(IEvent("Stopped", send))
             }
         }
     }

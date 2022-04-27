@@ -77,5 +77,5 @@ dependencies {
     implementation("org.greenrobot:eventbus:3.3.1")
     implementation("com.roger.catloadinglibrary:catloadinglibrary:1.0.9")
     implementation("com.github.bumptech.glide:glide:4.13.0")
-    implementation("com.airbnb.android:lottie:2.5.5")
+    implementation("com.airbnb.android:lottie:3.4.0")
 }

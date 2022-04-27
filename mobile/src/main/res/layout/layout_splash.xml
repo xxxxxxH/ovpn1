@@ -7,12 +7,11 @@
     android:background="@drawable/splash_bg">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loading"
+        android:id="@+id/anim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         app:lottie_fileName="rocket.json"
-        app:lottie_loop="true"
         app:lottie_autoPlay="true"
-        android:visibility="gone"
-        android:layout_centerInParent="true" />
+        app:lottie_loop="true"/>
 </RelativeLayout>

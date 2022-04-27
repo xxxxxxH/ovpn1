@@ -13,20 +13,12 @@ import fear.of.god.tools.initFaceBook
 
 class SplashActivity : BaseActivity(R.layout.layout_splash) {
 
-    private lateinit var loading: LottieAnimationView
-
     override fun initView() {
         super.initView()
-        loading = findViewById(R.id.loading)
-        loading.visibility = View.VISIBLE
-//        Glide.with(this).asGif().load(R.drawable.loading_rocket).into(loading)
-//        loadingView.show(supportFragmentManager,"")
         getConfig {
             initFaceBook()
-//            startActivity(Intent(this, HomeActivity::class.java))
-//            loadingView.dismiss()
-//            loading.visibility = View.GONE
-//            finish()
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 }

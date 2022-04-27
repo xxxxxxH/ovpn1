@@ -64,17 +64,22 @@
 
         <fear.of.god.view.AdViewNative
             android:id="@+id/ad2"
-            android:layout_below="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            app:native_size="small"/>
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/content"
+            app:native_size="small" />
 
-        <ImageView
-            android:id="@+id/loading"
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            app:lottie_fileName="rocket.json"
+            app:lottie_autoPlay="true"
             android:visibility="gone"
-            android:layout_centerInParent="true"/>
+            app:lottie_loop="true"/>
     </RelativeLayout>
 
 </androidx.core.widget.NestedScrollView>

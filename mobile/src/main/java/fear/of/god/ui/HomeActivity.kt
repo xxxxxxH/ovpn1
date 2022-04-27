@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.github.shadowsocks.R
 import com.github.shadowsocks.aidl.ShadowsocksConnection
@@ -26,6 +27,7 @@ import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.concurrent.thread
 
 @SuppressLint("SetTextI18n")
 class HomeActivity:BaseActivity(R.layout.layout_home) {
@@ -37,7 +39,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
     private lateinit var image:ImageView
     private lateinit var back:ImageView
     private lateinit var title:TextView
-    private lateinit var loading:ImageView
+    private lateinit var anim:LottieAnimationView
     private var connect: ActivityResultLauncher<*>? = null
     private val connection = ShadowsocksConnection(true)
     var tester: HttpsTest? = null
@@ -53,13 +55,12 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         ) { result: Boolean? -> }
         connection.connect(this, SSManager.get())
         homeStatus = findViewById(R.id.homeStatus)
-        loading = findViewById(R.id.loading)
-        loading.visibility = View.VISIBLE
-        Glide.with(this).asGif().load(R.drawable.loading_rocket).into(loading)
         ad1 = findViewById(R.id.ad1)
         ad2 = findViewById(R.id.ad2)
         image = findViewById(R.id.image)
         back = findViewById(R.id.back)
+        anim = findViewById(R.id.anim)
+        anim.visibility = View.VISIBLE
         back.visibility = View.GONE
         findViewById<TextView>(R.id.title).apply {
             text = "VPN"
@@ -74,16 +75,16 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             }else{
                 if ((it as Button).contentDescription == "Disconnect"){
 //                    loadingView.show(supportFragmentManager, "")
-                    loading.visibility = View.VISIBLE
+                    anim.visibility = View.VISIBLE
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(1000)
                         withContext(Dispatchers.Main){
-                            SSManager.get().stopConnect()
+                            SSManager.get().stopConnect(true)
                         }
                     }
                 }else if ((it as Button).contentDescription == "Connect"){
 //                    loadingView.show(supportFragmentManager, "")
-                    loading.visibility = View.VISIBLE
+                    anim.visibility = View.VISIBLE
                     lifecycleScope.launch(Dispatchers.IO){
                         delay(2000)
                         withContext(Dispatchers.Main){
@@ -103,7 +104,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 }
             }
         }
-        loading.visibility = View.GONE
+        anim.visibility = View.GONE
     }
 
 
@@ -130,7 +131,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
 
     override fun onDestroy() {
         super.onDestroy()
-        SSManager.get().stopConnect()
+        SSManager.get().stopConnect(false)
         EventBus.getDefault().unregister(this)
     }
 
@@ -139,11 +140,18 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
         val msg = e.getMessage()
         when(msg[0]){
             "switchServer" -> {
-                SSManager.get().switchServer(this)
-                serverEntity?.let {
-                    homeStatus.text = it.name
-                }?: kotlin.run {
-                    setStatus(Status.NONODE)
+                SSManager.get().stopConnect(false)
+                anim.visibility = View.VISIBLE
+                lifecycleScope.launch(Dispatchers.IO){
+                    delay(1000)
+                    withContext(Dispatchers.Main){
+                        SSManager.get().startConnect(this@HomeActivity, connect!!)
+                        serverEntity?.let {
+                            homeStatus.text = it.name
+                        }?: kotlin.run {
+                            setStatus(Status.NONODE)
+                        }
+                    }
                 }
             }
             "connecting" -> {
@@ -154,7 +162,7 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
                 "Connected".log()
                 setStatus(Status.CONNECTED)
 //                loadingView.dismiss()
-                loading.visibility = View.GONE
+                anim.visibility = View.GONE
                 tester?.test(this){
                     ad1.loadAd()
                     ad2.loadAd()
@@ -178,24 +186,26 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             }
             "Stopped" -> {
                 "Stopped".log()
-                setStatus(Status.UNCONNECT)
-//                loadingView.dismiss()
-                loading.visibility = View.GONE
-                interstitialAd?.let {
-                    configEntity?.let {
-                        if ((System.currentTimeMillis() - lastInterShowTime) > (it.interval * 1000)){
-                            showInter()
-                        }else{
-                            startActivity(Intent(this, ResultActivity::class.java).apply {
-                                putExtra("status", "Stopped")
-                            })
+                anim.visibility = View.GONE
+                val showAd = msg[1] as Boolean
+                if (showAd){
+                    setStatus(Status.UNCONNECT)
+                    interstitialAd?.let {
+                        configEntity?.let {
+                            if ((System.currentTimeMillis() - lastInterShowTime) > (it.interval * 1000)){
+                                showInter()
+                            }else{
+                                startActivity(Intent(this, ResultActivity::class.java).apply {
+                                    putExtra("status", "Stopped")
+                                })
+                            }
                         }
+                        statusExtra = "Stopped"
+                    }?: kotlin.run {
+                        startActivity(Intent(this, ResultActivity::class.java).apply {
+                            putExtra("status", "Stopped")
+                        })
                     }
-                    statusExtra = "Stopped"
-                }?: kotlin.run {
-                    startActivity(Intent(this, ResultActivity::class.java).apply {
-                        putExtra("status", "Stopped")
-                    })
                 }
             }
             "inter dismiss" -> {
@@ -205,11 +215,11 @@ class HomeActivity:BaseActivity(R.layout.layout_home) {
             }
             "start connect failed"->{
 //                loadingView.dismiss()
-                loading.visibility = View.GONE
+                anim.visibility = View.GONE
             }
             "stop connected failed"->{
 //                loadingView.dismiss()
-                loading.visibility = View.GONE
+                anim.visibility = View.GONE
             }
         }
     }
