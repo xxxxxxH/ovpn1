@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "308692655235",
+    "project_id": "rocketfly-vpn",
+    "storage_bucket": "rocketfly-vpn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:308692655235:android:22ade2fa45e6193cbfcfb6",
+        "android_client_info": {
+          "package_name": "fear.of.god.roket.vpn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "308692655235-ka521cprqm6lkvthrp6j14l7ai5ro05j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBctYC_f7tuWh8qD1CCoNp-KfBrswxVMa0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "308692655235-ka521cprqm6lkvthrp6j14l7ai5ro05j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
